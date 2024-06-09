@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:tzens/app/data/models/organization_model_model.dart';
 import 'package:tzens/app/utils/constant/color.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../controllers/detail_history_organisasi_controller.dart';
 
 class DetailHistoryOrganisasiView
@@ -13,6 +11,7 @@ class DetailHistoryOrganisasiView
       : super(key: key);
 
   final OrganizationModel organisasi;
+
   Future<void> launchUrl(Uri url) async {
     if (!await canLaunchUrl(url)) {
       await launchUrl(url);
@@ -25,33 +24,25 @@ class DetailHistoryOrganisasiView
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail Organisasi'),
+        title: Text('Organization Detail'),
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-
-        /** OUTER CONTAINER */
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.shortestSide,
           decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey,
-              width: 1,
-            ),
+            border: Border.all(color: Colors.grey, width: 1),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
             children: [
               Padding(
                 padding: EdgeInsets.all(10),
-
-                /** BLUE CONTAINER */
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   decoration: BoxDecoration(
-                    color: primaryColor,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Column(
@@ -61,65 +52,23 @@ class DetailHistoryOrganisasiView
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
-                      // Time
-                      // Row(
-                      //   children: [
-                      //     Column(
-                      //       children: [
-                      //         Text(
-                      //           "Start",
-                      //           style: TextStyle(color: Colors.white),
-                      //         ),
-                      //         Text(
-                      //           "webinar.time?.startTime ?? '',",
-                      //           style: TextStyle(color: Colors.white),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     SizedBox(width: 30),
-                      //     Expanded(
-                      //       child: Container(
-                      //         child: CustomPaint(
-                      //           painter: DashedLinePainter(color: Colors.white),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     SizedBox(width: 30),
-                      //     Column(
-                      //       children: [
-                      //         Text(
-                      //           "End",
-                      //           style: TextStyle(color: Colors.white),
-                      //         ),
-                      //         Text(
-                      //           "webinar.time?.endTime ?? ''",
-                      //           style: TextStyle(color: Colors.white),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ],
-                      // )
                     ],
                   ),
                 ),
               ),
-
-              /** DIVIDER */
-              Container(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                width: MediaQuery.of(context).size.width,
-                height: 2,
-                child: Expanded(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 2,
                   child: CustomPaint(
                     painter: DashedLinePainter(color: Colors.grey),
                   ),
                 ),
               ),
-
-              /** SECOND SECTION */
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Container(
@@ -152,7 +101,7 @@ class DetailHistoryOrganisasiView
                                 Text(organisasi.administrator!.email ?? ''),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                       Row(
@@ -164,8 +113,8 @@ class DetailHistoryOrganisasiView
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Fakultas"),
-                                Text(organisasi.administrator!.faculty ?? ''),
+                                Text("Faculty"),
+                                Text(organisasi.administrator!.faculty ?? '-'),
                               ],
                             ),
                           ),
@@ -174,56 +123,53 @@ class DetailHistoryOrganisasiView
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text("Status"),
-                                Text(organisasi.administrator!.faculty ?? ''),
+                                Text("Division"),
+                                organisasi.division?[0] != ""
+                                    ? Text(organisasi.division!.join("\n- "))
+                                    : Text("")
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
               ),
-
-              /** DIVIDER */
-              Container(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                width: MediaQuery.of(context).size.width,
-                height: 2,
-                child: Expanded(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 2,
                   child: CustomPaint(
                     painter: DashedLinePainter(color: Colors.grey),
                   ),
                 ),
               ),
-
-              /** THIRD SECTION */
               Padding(
                 padding: EdgeInsets.all(16),
                 child: Row(
                   children: [
-                    Expanded(child: Text("Link")),
+                    Expanded(
+                      child: Text("Link"),
+                    ),
                     Expanded(
                       child: TextButton(
-                          onPressed: () async {
-                            // if (webinar.link != null &&
-                            //     webinar.link!.isNotEmpty) {
-                            //   await launchUrl(Uri.parse(webinar.link!));
-                            // } else {
-                            //   return;
-                            // }
-                          },
-                          child:
-                              // organisasi.link!.isEmpty ||
-                              //         organisasi.link == null ||
-                              //         organisasi.link == ''
-                              //     ?
-                              Text(
-                                  'This organisasi is offline, no link available')
-                          // : Text(organisasi.link!),
-                          ),
-                    )
+                        onPressed: () async {
+                          // if (webinar.link != null &&
+                          //     webinar.link!.isNotEmpty) {
+                          //   await launchUrl(Uri.parse(webinar.link!));
+                          // } else {
+                          //   return;
+                          // }
+                        },
+                        child: organisasi.link!.isEmpty ||
+                                organisasi.link == null ||
+                                organisasi.link == ""
+                            ? Text("${organisasi.link ?? 'No link available'}")
+                            : Text("${organisasi.link ?? 'No link available'}"),
+                      ),
+                    ),
                   ],
                 ),
               ),
